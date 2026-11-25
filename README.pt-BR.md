@@ -202,17 +202,3 @@ npm start
 ```
 
 O servidor inicia em `http://localhost:3200`.
-
-## Observações de desenvolvimento
-
-- O projeto não possui testes automatizados configurados no `package.json`.
-- O projeto não possui scripts de lint ou formatação configurados no `package.json`.
-- A autenticação é básica e baseada em arquivo; não inclui hash de senha, sessões ou autorização por token.
-- O endpoint de sugestões usa lógica baseada em regras no backend.
-- A aplicação é adequada como protótipo/demo local. Para uso em produção, são necessários trabalhos adicionais, como autenticação segura, persistência em banco de dados, validação, logging, testes e configuração de deploy.
-
-## Segurança e tratamento de dados
-
-- Não versione dados pessoais reais, credenciais ou informações sensíveis.
-- Revise os arquivos em `data/` antes de enviar alterações para um repositório remoto.
-- O `.gitignore` inclui entradas comuns de ambiente/local e arquivos de dados sensíveis selecionados. Revise-o antes de adicionar novos arquivos de dados.

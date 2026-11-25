@@ -202,17 +202,3 @@ npm start
 ```
 
 The server starts at `http://localhost:3200`.
-
-## Development Notes
-
-- The project has no automated tests configured in `package.json`.
-- The project has no lint or format scripts configured in `package.json`.
-- Authentication is basic and file-based; it does not include password hashing, sessions, or token-based authorization.
-- The suggestion endpoint uses rule-based logic in the backend.
-- The application is suitable as a local prototype/demo. Additional work is needed for production use, such as secure authentication, database persistence, validation, logging, tests, and deployment configuration.
-
-## Security and Data Handling
-
-- Do not commit real personal data, credentials, or sensitive information.
-- Review files in `data/` before pushing changes to a remote repository.
-- `.gitignore` includes common local/environment entries and selected sensitive data files. Review it before adding new data files.
