@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HuntFlow - Área do Candidato</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* Header do Candidato */
+    .header-candidato {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+
+    .header-candidato .logo-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-candidato .logo-inline a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .logo-text-small {
+      font-size: 1.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar-header {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    /* Sidebar do Candidato */
+    .sidebar-candidato {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      bottom: 0;
+      width: 260px;
+      background: white;
+      border-right: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      overflow-y: auto;
+      z-index: 50;
+    }
+
+    .sidebar-user-info {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-user-info .user-name {
+      font-weight: 600;
+      color: #1a1a2e;
+      font-size: 1rem;
+    }
+
+    .sidebar-user-info .user-role {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-nav-candidato {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-nav-candidato li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav-candidato a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav-candidato a:hover {
+      background: #f3f4f6;
+    }
+
+    .sidebar-nav-candidato a.active {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+    }
+
+    .sidebar-nav-candidato a svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-logout {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .btn-logout-sidebar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: none;
+      background: none;
+      color: #ef4444;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-logout-sidebar:hover {
+      background: #fef2f2;
+    }
+
+    .btn-logout-sidebar svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Conteúdo Principal */
+    .main-candidato {
+      margin-left: 260px;
+      margin-top: 70px;
+      padding: 2rem;
+      min-height: calc(100vh - 70px);
+      background: #f5f7fa;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* Grid de Vagas */
+    .vagas-candidato-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .vaga-candidato-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .vaga-candidato-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .vaga-candidato-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .vaga-candidato-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .vaga-id-badge {
+      font-size: 0.75rem;
+      color: #4f46e5;
+      background: #eef2ff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .vaga-candidato-info {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+
+    .vaga-candidato-desc {
+      font-size: 0.9rem;
+      color: #374151;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .vaga-candidato-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tag {
+      background: #f3f4f6;
+      color: #374151;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .btn-candidatar {
+      width: 100%;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-candidatar:hover {
+      background: #4338ca;
+    }
+
+    /* Status da Candidatura */
+    .candidatura-status {
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-em-andamento {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-concluido {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-desclassificado {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Etapas do Processo */
+    .etapas-container {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .etapas-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 0.75rem;
+    }
+
+    .etapas-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .etapa-segmento {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: #e5e7eb;
+    }
+
+    .etapa-segmento.preenchido {
+      background: #22c55e;
+    }
+
+    .etapa-segmento.atual {
+      background: #4f46e5;
+    }
+
+    /* Seções */
+    .secao-candidato {
+      display: none;
+    }
+
+    .secao-candidato.ativa {
+      display: block;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 12px;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state h2 {
+      color: #1a1a2e;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ============== CHATBOT FLUTUANTE ============== */
+    .chatbot-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+    }
+
+    .chatbot-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(79, 70, 229, 0.5);
+    }
+
+    .chatbot-toggle svg {
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-toggle.aberto svg {
+      transform: rotate(180deg);
+    }
+
+    .chatbot-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      background: #ef4444;
+      border-radius: 50%;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Chat Window */
+    .chatbot-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      height: 520px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-window.aberto {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chatbot-avatar {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .chatbot-header-info {
+      flex: 1;
+    }
+
+    .chatbot-header-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .chatbot-header-info p {
+      font-size: 0.75rem;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chatbot-header-info p::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+
+    .chatbot-close {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: background 0.2s;
+    }
+
+    .chatbot-close:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Mensagens */
+    .chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chatbot-message {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 85%;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chatbot-message.user {
+      margin-left: auto;
+      flex-direction: row-reverse;
+    }
+
+    .chatbot-msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .chatbot-message.bot .chatbot-msg-avatar {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    .chatbot-message.user .chatbot-msg-avatar {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .chatbot-msg-content {
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .chatbot-message.bot .chatbot-msg-content {
+      background: white;
+      color: #374151;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .chatbot-message.user .chatbot-msg-content {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Sugestões */
+    .chatbot-suggestions {
+      padding: 0.75rem 1rem;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .suggestion-chip {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 0.4rem 0.75rem;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #374151;
+    }
+
+    .suggestion-chip:hover {
+      background: #eef2ff;
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    /* Input */
+    .chatbot-input-container {
+      padding: 0.75rem 1rem;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chatbot-input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .chatbot-input:focus {
+      border-color: #4f46e5;
+    }
+
+    .chatbot-send {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .chatbot-send:hover {
+      transform: scale(1.1);
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 0.75rem;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #9ca3af;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Responsivo */
+    @media (max-width: 1024px) {
+      .sidebar-candidato {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .sidebar-candidato.aberto {
+        transform: translateX(0);
+      }
+
+      .main-candidato {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vagas-candidato-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chatbot-window {
+        width: calc(100vw - 32px);
+        right: -8px;
+        bottom: 70px;
+        height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header do Candidato -->
+  <header class="header-candidato">
+    <div class="logo-inline">
+      <a href="#" onclick="irParaDashboard()">
+        <svg class="logo-svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="12" r="6" fill="#4f46e5"/>
+          <circle cx="10" cy="28" r="5" fill="#7c3aed"/>
+          <circle cx="30" cy="28" r="5" fill="#7c3aed"/>
+          <path d="M20 20 L10 23 M20 20 L30 23 M10 28 L30 28" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text-small">HuntFlow</span>
+      </a>
+    </div>
+    <div class="header-user">
+      <div class="user-avatar-header" id="userAvatarHeader">U</div>
+    </div>
+  </header>
+
+  <!-- Sidebar do Candidato -->
+  <aside class="sidebar-candidato" id="sidebarCandidato">
+    <div class="sidebar-user-info">
+      <div class="user-name" id="sidebarUserName">Usuário</div>
+      <div class="user-role">Candidato</div>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav-candidato">
+        <li>
+          <a href="#" onclick="mostrarSecao('vagas')" id="nav-vagas" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Vagas Disponíveis
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="mostrarSecao('candidaturas')" id="nav-candidaturas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Minhas Candidaturas
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-logout">
+      <button class="btn-logout-sidebar" onclick="sairDaConta()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Sair da conta
+      </button>
+    </div>
+  </aside>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-candidato">
+    <!-- Seção: Vagas Disponíveis -->
+    <section class="secao-candidato ativa" id="secao-vagas">
+      <div class="page-header">
+        <h1>Vagas Disponíveis</h1>
+        <p>Encontre a oportunidade perfeita para você</p>
+      </div>
+
+      <div class="vagas-candidato-grid" id="vagasGrid">
+        <!-- Será preenchido via JS -->
+      </div>
+    </section>
+
+    <!-- Seção: Minhas Candidaturas -->
+    <section class="secao-candidato" id="secao-candidaturas">
+      <div class="page-header">
+        <h1>Minhas Candidaturas</h1>
+        <p>Acompanhe o status dos seus processos seletivos</p>
+      </div>
+
+      <div class="vagas-candidato-grid" id="candidaturasGrid">
+        <!-- Será preenchido via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ============== CHATBOT FLUTUANTE ============== -->
+  <div class="chatbot-float">
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+    <span class="chatbot-badge" id="chatbotBadge">1</span>
+
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <div class="chatbot-avatar">🤖</div>
+        <div class="chatbot-header-info">
+          <h3>Assistente Virtual</h3>
+          <p>Online agora</p>
+        </div>
+        <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+      </div>
+
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="chatbot-message bot">
+          <div class="chatbot-msg-avatar">🤖</div>
+          <div class="chatbot-msg-content">
+            Olá! 👋 Sou o assistente virtual da HuntFlow. Posso ajudar com dúvidas sobre processos seletivos, vagas, benefícios e muito mais!
+          </div>
+        </div>
+      </div>
+
+      <div class="chatbot-suggestions" id="chatbotSuggestions">
+        <button class="suggestion-chip" onclick="enviarSugestao('A vaga é remota ou presencial?')">🏠 Remoto?</button>
+        <button class="suggestion-chip" onclick="enviarSugestao('Qual o modelo de contratação?')">📋 Contratação</button>
+        <button class="suggestion-chip" onclick="enviarSugestao('Existe plano de carreira?')">🚀 Carreira</button>
+        <button class="suggestion-chip" onclick="enviarSugestao('Qual a faixa salarial?')">💰 Salário</button>
+      </div>
+
+      <div class="chatbot-input-container">
+        <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Digite sua pergunta..." onkeypress="handleChatKeyPress(event)">
+        <button class="chatbot-send" onclick="enviarMensagemChatbot()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Candidatura -->
+  <div class="modal" id="modalCandidatura">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Candidatar-se à vaga</h3>
+        <button class="modal-close" onclick="fecharModalCandidatura()">×</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalVagaNome" style="font-weight: 600; margin-bottom: 1rem; color: #4f46e5;"></p>
+        <form id="formCandidatura" onsubmit="enviarCandidatura(event)">
+          <input type="hidden" id="candidaturaVagaId">
+          <div class="form-group">
+            <label>Nome completo *</label>
+            <input type="text" id="candidaturaNome" required>
+          </div>
+          <div class="form-group">
+            <label>LinkedIn *</label>
+            <input type="url" id="candidaturaLinkedIn" placeholder="https://linkedin.com/in/..." required>
+          </div>
+          <div class="form-group">
+            <label>GitHub</label>
+            <input type="url" id="candidaturaGitHub" placeholder="https://github.com/...">
+          </div>
+          <div class="form-group">
+            <label>Portfólio</label>
+            <input type="url" id="candidaturaPortfolio" placeholder="https://...">
+          </div>
+          <button type="submit" class="btn-primary btn-full">Enviar candidatura</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detalhes da Candidatura -->
+  <div class="modal" id="modalDetalhesCandidatura">
+    <div class="modal-content modal-grande">
+      <div class="modal-header">
+        <h3 id="detalhesVagaNome">Detalhes da Candidatura</h3>
+        <button class="modal-close" onclick="fecharModalDetalhes()">×</button>
+      </div>
+      <div class="modal-body" id="detalhesConteudo">
+        <!-- Será preenchido via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let usuarioLogado = null;
+    let vagasAbertas = [];
+    let minhasCandidaturas = [];
+    let faqData = [];
+    let chatbotAberto = false;
+
+    // FAQ Data embutida
+    faqData = [
+      { id: "C001", pergunta: "A vaga é remota ou presencial?", resposta: "A posição é presencial, com possibilidade de atuação remota por um período inicial se necessário. 🏡✨", categoria: "Modelo de trabalho" },
+      { id: "C002", pergunta: "Qual o modelo de contratação? É PJ, CLT?", resposta: "O vínculo ocorre por meio de bolsa ou contrato, garantindo remuneração segura e transparente. 😊🔬", categoria: "Contratação" },
+      { id: "C003", pergunta: "Existe plano de carreira?", resposta: "Sim! 🤩 Oferecemos oportunidades de crescimento e desenvolvimento profissional, de forma contínua. 🚀📈", categoria: "Plano de carreira" },
+      { id: "C004", pergunta: "Qual a faixa salarial da vaga?", resposta: "A remuneração é definida após avaliação do candidato, buscando uma proposta justa e alinhada à experiência e ao perfil profissional. 😊💼", categoria: "Remuneração" },
+      { id: "C005", pergunta: "Preciso morar em algum local específico?", resposta: "Sim, a atuação é presencial. 🏡✨", categoria: "Modelo de trabalho" },
+      { id: "C007", pergunta: "Há possibilidade de crescimento rápido?", resposta: "O crescimento depende de desempenho e desenvolvimento, com oportunidades de evolução contínua. ☺️", categoria: "Plano de carreira" },
+      { id: "C008", pergunta: "Quantas etapas tem o processo?", resposta: "O processo é ágil e objetivo, pensado para ser claro e eficiente para o candidato. 🙂🚀", categoria: "Processo seletivo" },
+      { id: "C009", pergunta: "Posso informar minha pretensão salarial?", resposta: "Sim! Você pode compartilhar sua pretensão salarial quando se sentir confortável. 😉", categoria: "Remuneração" },
+      { id: "C010", pergunta: "O trabalho é híbrido?", resposta: "Não, a atuação acontece de forma presencial, valorizando colaboração e proximidade da equipe. ✨", categoria: "Modelo de trabalho" },
+      { id: "C011", pergunta: "O pagamento tem descontos?", resposta: "O pagamento é realizado por bolsa, sem descontos obrigatórios, garantindo recebimento integral. 🤝", categoria: "Contratação" },
+      { id: "C012", pergunta: "Existe avaliação de desempenho?", resposta: "Sim! Há avaliações periódicas que acompanham o desenvolvimento e evolução profissional. 🤩", categoria: "Plano de carreira" },
+      { id: "C014", pergunta: "Como é definida a senioridade?", resposta: "A senioridade é avaliada de acordo com experiência, habilidades e desempenho, de forma justa e transparente. 🚀", categoria: "Remuneração" },
+      { id: "C015", pergunta: "Qual a carga horária?", resposta: "A atuação é normalmente em regime integral, como definido para a posição. 😊", categoria: "Condições de trabalho" },
+      { id: "C016", pergunta: "Preciso ter experiência específica?", resposta: "Experiência pode ser considerada, mas também valorizamos potencial de aprendizado e adaptação. 🚀", categoria: "Requisitos" },
+      { id: "C017", pergunta: "Há interação com outros times?", resposta: "Sim! A atuação presencial facilita a colaboração e a troca de conhecimento entre equipes. ☕😅", categoria: "Modelo de trabalho" },
+      { id: "C018", pergunta: "O contrato possui benefícios tradicionais?", resposta: "O modelo de bolsa pode incluir apoio básico e iniciativas de bem-estar, dependendo da oportunidade. ✨", categoria: "Contratação" },
+      { id: "C019", pergunta: "Quando ocorre a negociação salarial?", resposta: "A negociação acontece em momento oportuno do processo, após avaliação do candidato.", categoria: "Remuneração" },
+      { id: "C020", pergunta: "Posso participar estando empregado?", resposta: "Sim! Candidatos atualmente empregados podem participar normalmente. O processo é ágil e transparente, proporcionando boa experiência ao candidato. 🚀", categoria: "Processo seletivo" }
+    ];
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', async () => {
+      verificarAcesso();
+      await Promise.all([
+        carregarVagas(),
+        carregarCandidaturas()
+      ]);
+    });
+
+    // Verificar acesso
+    function verificarAcesso() {
+      const usuario = localStorage.getItem('usuarioLogado');
+      if (!usuario) {
+        alert('Você precisa estar logado para acessar esta página');
+        window.location.href = '/landing.html';
+        return;
+      }
+      usuarioLogado = JSON.parse(usuario);
+
+      const iniciais = usuarioLogado.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('userAvatarHeader').textContent = iniciais;
+      document.getElementById('sidebarUserName').textContent = usuarioLogado.nome;
+      document.getElementById('candidaturaNome').value = usuarioLogado.nome;
+    }
+
+    // Sair da conta
+    function sairDaConta() {
+      localStorage.removeItem('usuarioLogado');
+      window.location.href = '/landing.html';
+    }
+
+    // Ir para dashboard
+    function irParaDashboard() {
+      mostrarSecao('vagas');
+    }
+
+    // Navegação entre seções
+    function mostrarSecao(secao) {
+      document.querySelectorAll('.secao-candidato').forEach(s => s.classList.remove('ativa'));
+      document.getElementById('secao-' + secao).classList.add('ativa');
+
+      document.querySelectorAll('.sidebar-nav-candidato a').forEach(a => a.classList.remove('active'));
+      const navItem = document.getElementById('nav-' + secao);
+      if (navItem) navItem.classList.add('active');
+    }
+
+    // Carregar vagas
+    async function carregarVagas() {
+      try {
+        const response = await fetch('/api/vagas');
+        const vagas = await response.json();
+        vagasAbertas = vagas.filter(v => v.status === 'Aberta');
+        renderVagas();
+      } catch (error) {
+        console.error('Erro ao carregar vagas:', error);
+      }
+    }
+
+    // Renderizar vagas
+    function renderVagas() {
+      const container = document.getElementById('vagasGrid');
+
+      if (vagasAbertas.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><h2>Não há vagas disponíveis</h2><p>Novas oportunidades serão adicionadas em breve.</p></div>';
+        return;
+      }
+
+      container.innerHTML = vagasAbertas.map(vaga => `
+        <div class="vaga-candidato-card" onclick="abrirModalCandidatura('${vaga.id}', '${vaga.nome}')">
+          <div class="vaga-candidato-header">
+            <h3>${vaga.nome}</h3>
+            <span class="vaga-id-badge">${vaga.id}</span>
+          </div>
+          <div class="vaga-candidato-info">
+            <span>👤 ${vaga.senioridade || 'N/A'}</span>
+            <span>📍 ${vaga.local || 'Maceió - AL'}</span>
+          </div>
+          <div class="vaga-candidato-desc">
+            ${(vaga.descricao || 'Sem descrição').substring(0, 120)}...
+          </div>
+          ${vaga.hardSkills && vaga.hardSkills.length > 0 ? `
+            <div class="vaga-candidato-skills">
+              ${vaga.hardSkills.slice(0, 4).map(s => `<span class="skill-tag">${s}</span>`).join('')}
+            </div>
+          ` : ''}
+          <button class="btn-candidatar" onclick="event.stopPropagation(); abrirModalCandidatura('${vaga.id}', '${vaga.nome}')">
+            Candidatar-se
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Carregar candidaturas
+    async function carregarCandidaturas() {
+      try {
+        const response = await fetch('/api/candidatos-todos');
+        const todosCandidatos = await response.json();
+        minhasCandidaturas = todosCandidatos.filter(c => c.vagaId !== null);
+        renderCandidaturas();
+      } catch (error) {
+        console.error('Erro ao carregar candidaturas:', error);
+      }
+    }
+
+    // Renderizar candidaturas
+    function renderCandidaturas() {
+      const container = document.getElementById('candidaturasGrid');
+
+      if (minhasCandidaturas.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">💼</div>
+            <h2>Nenhuma candidatura realizada</h2>
+            <p>Você ainda não se candidatou a nenhuma vaga.</p>
+            <button class="btn-primary" onclick="mostrarSecao('vagas')">Ver vagas disponíveis</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = minhasCandidaturas.map(candidatura => {
+        const statusClass = candidatura.desclassificado ? 'status-desclassificado' :
+          candidatura.etapa === 'Contratado' ? 'status-concluido' : 'status-em-andamento';
+        const statusText = candidatura.desclassificado ? '❌ Desclassificado' :
+          candidatura.etapa === 'Contratado' ? '✅ Concluído' : '🔄 Em andamento';
+        const etapas = ['Triagem', 'Entrevista', 'Teste técnico', 'Final', 'Contratado'];
+        const etapaIndex = etapas.indexOf(candidatura.etapa || 'Triagem');
+
+        return `
+          <div class="vaga-candidato-card" onclick="verDetalhesCandidatura('${candidatura.id}')">
+            <div class="vaga-candidato-header">
+              <h3>${candidatura.vagaNome || 'Vaga'}</h3>
+              <span class="vaga-id-badge">${candidatura.vagaId || ''}</span>
+            </div>
+            <div class="vaga-candidato-info">
+              <span>📍 Etapa: ${candidatura.etapa || 'Triagem'}</span>
+              <span>📊 ${candidatura.compatibilidade || 0}% compatível</span>
+            </div>
+            <div class="candidatura-status ${statusClass}">
+              ${statusText}
+            </div>
+            <div class="etapas-container">
+              <div class="etapas-label">Progresso no processo</div>
+              <div class="etapas-bar">
+                ${etapas.map((_, i) => `
+                  <div class="etapa-segmento ${i < etapaIndex ? 'preenchido' : ''} ${i === etapaIndex ? 'atual' : ''}"></div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Ver detalhes da candidatura
+    function verDetalhesCandidatura(candidatoId) {
+      const candidatura = minhasCandidaturas.find(c => c.id === candidatoId);
+      if (!candidatura) return;
+
+      const etapas = ['Triagem', 'Entrevista', 'Teste técnico', 'Final', 'Contratado'];
+      const etapaAtualIndex = etapas.indexOf(candidatura.etapa || 'Triagem');
+
+      document.getElementById('detalhesVagaNome').textContent = candidatura.vagaNome || 'Detalhes da Candidatura';
+      document.getElementById('detalhesConteudo').innerHTML = `
+        <div style="margin-bottom: 1.5rem;">
+          <div class="candidatura-status ${candidatura.desclassificado ? 'status-desclassificado' : 'status-em-andamento'}">
+            ${candidatura.desclassificado ? '❌ Desclassificado' : '🔄 ' + (candidatura.etapa || 'Triagem')}
+          </div>
+        </div>
+
+        <div style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
+          <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.5rem;">Sua compatibilidade</div>
+          <div style="font-size: 3rem; font-weight: 700; color: #4f46e5;">${candidatura.compatibilidade || 85}%</div>
+        </div>
+
+        <h4 style="margin-bottom: 1rem; color: #1a1a2e;">Etapas do Processo</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+          ${etapas.map((etapa, index) => {
+            const concluida = index < etapaAtualIndex && !candidatura.desclassificado;
+            const atual = index === etapaAtualIndex && !candidatura.desclassificado;
+            return `
+              <div style="flex: 1; text-align: center;">
+                <div style="width: 32px; height: 32px; border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: white; background: ${concluida ? '#22c55e' : atual ? '#4f46e5' : '#e5e7eb'}; color: ${concluida || atual ? 'white' : '#6b7280'};">
+                  ${concluida ? '✓' : index + 1}
+                </div>
+                <div style="font-size: 0.75rem; color: ${atual ? '#4f46e5' : '#6b7280'}; font-weight: ${atual ? '600' : '400'};">${etapa}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        ${candidatura.relatorioRecrutador?.observacoes ? `
+          <div style="padding: 1rem; background: #fef3c7; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: #92400e;">📝 Observações</h4>
+            <p style="color: #92400e;">${candidatura.relatorioRecrutador.observacoes}</p>
+          </div>
+        ` : ''}
+      `;
+
+      document.getElementById('modalDetalhesCandidatura').classList.add('active');
+    }
+
+    function fecharModalDetalhes() {
+      document.getElementById('modalDetalhesCandidatura').classList.remove('active');
+    }
+
+    // Modal de Candidatura
+    function abrirModalCandidatura(vagaId, vagaNome) {
+      document.getElementById('candidaturaVagaId').value = vagaId;
+      document.getElementById('modalVagaNome').textContent = `Vaga: ${vagaNome}`;
+      document.getElementById('modalCandidatura').classList.add('active');
+    }
+
+    function fecharModalCandidatura() {
+      document.getElementById('modalCandidatura').classList.remove('active');
+    }
+
+    // Enviar candidatura
+    async function enviarCandidatura(event) {
+      event.preventDefault();
+
+      const vagaId = document.getElementById('candidaturaVagaId').value;
+      const nome = document.getElementById('candidaturaNome').value;
+      const linkedin = document.getElementById('candidaturaLinkedIn').value;
+      const github = document.getElementById('candidaturaGitHub').value || null;
+      const portfolio = document.getElementById('candidaturaPortfolio').value || null;
+
+      try {
+        const response = await fetch('/api/candidatos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, linkedin, github, portfolio, vagaId })
+        });
+
+        if (response.ok) {
+          alert('Candidatura enviada com sucesso!');
+          fecharModalCandidatura();
+          carregarCandidaturas();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Erro ao enviar candidatura');
+        }
+      } catch (error) {
+        alert('Erro ao enviar candidatura');
+      }
+    }
+
+    // ============== CHATBOT ==============
+    function toggleChatbot() {
+      chatbotAberto = !chatbotAberto;
+      const window = document.getElementById('chatbotWindow');
+      const toggle = document.getElementById('chatbotToggle');
+      const badge = document.getElementById('chatbotBadge');
+
+      if (chatbotAberto) {
+        window.classList.add('aberto');
+        toggle.classList.add('aberto');
+        badge.style.display = 'none';
+      } else {
+        window.classList.remove('aberto');
+        toggle.classList.remove('aberto');
+      }
+    }
+
+    function handleChatKeyPress(event) {
+      if (event.key === 'Enter') {
+        enviarMensagemChatbot();
+      }
+    }
+
+    function enviarSugestao(texto) {
+      document.getElementById('chatbotInput').value = texto;
+      enviarMensagemChatbot();
+    }
+
+    function enviarMensagemChatbot() {
+      const input = document.getElementById('chatbotInput');
+      const mensagem = input.value.trim();
+      if (!mensagem) return;
+
+      // Adicionar mensagem do usuário
+      adicionarMensagemChatbot(mensagem, 'user');
+      input.value = '';
+
+      // Esconder sugestões
+      document.getElementById('chatbotSuggestions').style.display = 'none';
+
+      // Mostrar digitando
+      mostrarDigitandoChatbot();
+
+      // Responder
+      setTimeout(() => {
+        removerDigitandoChatbot();
+        const resposta = buscarRespostaFAQ(mensagem);
+        adicionarMensagemChatbot(resposta, 'bot');
+      }, 800 + Math.random() * 700);
+    }
+
+    function adicionarMensagemChatbot(texto, tipo) {
+      const container = document.getElementById('chatbotMessages');
+      const avatar = tipo === 'bot' ? '🤖' : getIniciaisUsuario();
+
+      const html = `
+        <div class="chatbot-message ${tipo}">
+          <div class="chatbot-msg-avatar">${avatar}</div>
+          <div class="chatbot-msg-content">${texto}</div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', html);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function mostrarDigitandoChatbot() {
+      const container = document.getElementById('chatbotMessages');
+      const html = `
+        <div class="chatbot-message bot typing-msg">
+          <div class="chatbot-msg-avatar">🤖</div>
+          <div class="chatbot-msg-content">
+            <div class="typing-indicator">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', html);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function removerDigitandoChatbot() {
+      const typing = document.querySelector('.typing-msg');
+      if (typing) typing.remove();
+    }
+
+    function buscarRespostaFAQ(pergunta) {
+      const perguntaLower = pergunta.toLowerCase();
+      const keywords = {
+        'remoto': ['remoto', 'presencial', 'home office', 'trabalho', 'híbrido', 'morar', 'local', 'casa'],
+        'contratação': ['contratação', 'pj', 'clt', 'contrato', 'benefícios', 'descontos', 'pagamento'],
+        'salário': ['salário', 'remuneração', 'pagamento', 'pretensão', 'negociação', 'faixa', 'ganho'],
+        'carreira': ['carreira', 'crescimento', 'promoção', 'evolução', 'plano', 'senioridade', 'desempenho'],
+        'processo': ['etapas', 'processo', 'seletivo', 'entrevista', 'teste', 'fases'],
+        'experiência': ['experiência', 'requisitos', 'preciso', 'necessário'],
+        'horário': ['horário', 'carga', 'horas', 'jornada', 'integral']
+      };
+
+      let melhorMatch = null;
+      let maiorScore = 0;
+
+      for (const item of faqData) {
+        let score = 0;
+        const perguntaItemLower = item.pergunta.toLowerCase();
+        const respostaLower = item.resposta.toLowerCase();
+
+        for (const [, palavras] of Object.entries(keywords)) {
+          for (const palavra of palavras) {
+            if (perguntaLower.includes(palavra)) {
+              if (perguntaItemLower.includes(palavra) || respostaLower.includes(palavra)) {
+                score += 2;
+              }
+            }
+          }
+        }
+
+        const palavrasPergunta = perguntaLower.split(' ');
+        for (const palavra of palavrasPergunta) {
+          if (palavra.length > 3 && perguntaItemLower.includes(palavra)) {
+            score += 3;
+          }
+        }
+
+        if (score > maiorScore) {
+          maiorScore = score;
+          melhorMatch = item;
+        }
+      }
+
+      if (melhorMatch && maiorScore > 0) {
+        return melhorMatch.resposta;
+      }
+
+      const respostasPadrao = [
+        'Obrigado pela pergunta! Posso ajudar com dúvidas sobre vagas, contratação, salários e processo seletivo. Tente perguntar sobre um desses temas! 😊',
+        'Essa é uma ótima pergunta! Para mais informações específicas, recomendo entrar em contato com nossa equipe de recrutamento.',
+        'Entendi! Posso ajudar com informações sobre o processo seletivo, modelo de trabalho, benefícios e carreira. Sobre o que gostaria de saber?'
+      ];
+      return respostasPadrao[Math.floor(Math.random() * respostasPadrao.length)];
+    }
+
+    function getIniciaisUsuario() {
+      if (!usuarioLogado) return 'U';
+      return usuarioLogado.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    }
+
+    // Fechar modais ao clicar fora
+    document.getElementById('modalCandidatura').addEventListener('click', (e) => {
+      if (e.target.id === 'modalCandidatura') fecharModalCandidatura();
+    });
+
+    document.getElementById('modalDetalhesCandidatura').addEventListener('click', (e) => {
+      if (e.target.id === 'modalDetalhesCandidatura') fecharModalDetalhes();
+    });
+  </script>
+</body>
+</html>

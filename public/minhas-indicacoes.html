@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HuntFlow - Minhas Indicações</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Menu Superior Simples -->
+  <header class="menu-superior">
+    <div class="menu-container">
+      <div class="menu-logo">
+        <a href="#" onclick="irParaDashboard()">
+          <svg class="logo-svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="12" r="6" fill="#4f46e5"/>
+            <circle cx="10" cy="28" r="5" fill="#7c3aed"/>
+            <circle cx="30" cy="28" r="5" fill="#7c3aed"/>
+            <path d="M20 20 L10 23 M20 20 L30 23 M10 28 L30 28" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">HuntFlow</span>
+        </a>
+      </div>
+      <div class="menu-user" id="menuUser">
+        <span class="user-name" id="userName"></span>
+        <div class="user-dropdown">
+          <a href="/indicacao.html">➕ Fazer Indicação</a>
+          <a href="/minhas-indicacoes.html" class="active">📋 Minhas Indicações</a>
+          <a href="#" onclick="sairDaConta()">🚪 Sair da conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="padding-top: 100px;">
+    <!-- Header -->
+    <header class="header">
+      <h1>Minhas Indicações</h1>
+      <button class="btn-primary" onclick="window.location.href='/indicacao.html'">
+        ➕ Fazer nova indicação
+      </button>
+    </header>
+
+    <!-- Estatísticas -->
+    <div class="stats-grid" id="statsGrid">
+      <!-- Será preenchido via JS -->
+    </div>
+
+    <!-- Lista de Indicações -->
+    <div class="indicacoes-list" id="indicacoesList">
+      <!-- Será preenchido via JS -->
+    </div>
+  </div>
+
+  <script src="/js/minhas-indicacoes.js"></script>
+</body>
+</html>

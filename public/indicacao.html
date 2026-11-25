@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge - Indicação de Candidato</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Menu Superior Simples -->
+  <header class="menu-superior">
+    <div class="menu-container">
+      <div class="menu-logo">
+        <a href="#" onclick="irParaDashboard()">
+          <svg class="logo-svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="12" r="6" fill="#4f46e5"/>
+            <circle cx="10" cy="28" r="5" fill="#7c3aed"/>
+            <circle cx="30" cy="28" r="5" fill="#7c3aed"/>
+            <path d="M20 20 L10 23 M20 20 L30 23 M10 28 L30 28" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">HuntFlow</span>
+        </a>
+      </div>
+      <div class="menu-user" id="menuUser">
+        <span class="user-name" id="userName"></span>
+        <div class="user-dropdown">
+          <a href="/indicacao.html" class="active">➕ Fazer Indicação</a>
+          <a href="/minhas-indicacoes.html">📋 Minhas Indicações</a>
+          <a href="#" onclick="sairDaConta()">🚪 Sair da conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="padding-top: 100px;">
+    <!-- Header -->
+    <header class="header">
+      <h1>Indicação de Candidato</h1>
+    </header>
+
+    <!-- Informação do Usuário -->
+    <div class="usuario-info" id="usuarioInfo">
+      <!-- Será preenchido via JS -->
+    </div>
+
+    <!-- Busca de Vagas -->
+    <div class="busca-vagas">
+      <h2>1. Selecione a vaga</h2>
+      <div class="search-box">
+        <input type="text" id="searchVaga" placeholder="Buscar vaga pelo nome..." oninput="filtrarVagas()">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+
+      <div class="vagas-lista" id="vagasLista">
+        <!-- Vagas serão inseridas via JS -->
+      </div>
+    </div>
+
+    <!-- Vaga Selecionada -->
+    <div class="vaga-selecionada" id="vagaSelecionada" style="display: none;">
+      <h3>Vaga selecionada:</h3>
+      <div class="vaga-card-selecionada" id="vagaCardSelecionada">
+        <!-- Será preenchido via JS -->
+      </div>
+    </div>
+
+    <!-- Botão para abrir modal -->
+    <button class="btn-primary btn-indicar" id="btnIndicar" onclick="abrirModalIndicacao()" style="display: none;">
+      Fazer indicação
+    </button>
+  </div>
+
+  <!-- Modal de Indicação -->
+  <div class="modal" id="modalIndicacao">
+    <div class="modal-content modal-grande">
+      <div class="modal-header">
+        <h3>Indicar Candidato</h3>
+        <button class="modal-close" onclick="fecharModalIndicacao()">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="formIndicacao" onsubmit="enviarIndicacao(event)">
+          <div class="indicacao-secao">
+            <h4>Dados do Indicador</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="indicadorNome" required>
+              </div>
+              <div class="form-group">
+                <label>E-mail *</label>
+                <input type="email" id="indicadorEmail" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="indicacao-secao">
+            <h4>Dados do Candidato</h4>
+            <div class="form-group">
+              <label>Nome completo do candidato *</label>
+              <input type="text" id="candidatoNome" required>
+            </div>
+            <div class="form-group">
+              <label>LinkedIn *</label>
+              <input type="url" id="candidatoLinkedIn" placeholder="https://linkedin.com/in/..." required>
+            </div>
+            <div class="form-group">
+              <label>GitHub</label>
+              <input type="url" id="candidatoGitHub" placeholder="https://github.com/...">
+            </div>
+            <div class="form-group">
+              <label>Portfólio</label>
+              <input type="url" id="candidatoPortfolio" placeholder="https://...">
+            </div>
+          </div>
+
+          <div class="form-info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+            <p>A indicação será enviada para o recrutador responsável pela vaga. Você será notificado quando a indicação for avaliada.</p>
+          </div>
+
+          <div class="modal-acoes">
+            <button type="button" class="btn-cancelar" onclick="fecharModalIndicacao()">Cancelar</button>
+            <button type="submit" class="btn-success">Enviar indicação</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/indicacao.js"></script>
+</body>
+</html>

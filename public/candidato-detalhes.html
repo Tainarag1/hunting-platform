@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hunting Platform - Informações do Candidato</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Menu Superior -->
+  <header class="menu-superior">
+    <div class="menu-container">
+      <div class="menu-logo">
+        <a href="/">
+          <svg class="logo-svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="12" r="6" fill="#4f46e5"/>
+            <circle cx="10" cy="28" r="5" fill="#7c3aed"/>
+            <circle cx="30" cy="28" r="5" fill="#7c3aed"/>
+            <path d="M20 20 L10 23 M20 20 L30 23 M10 28 L30 28" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">HuntFlow</span>
+        </a>
+      </div>
+      <div class="menu-user" id="menuUser" style="display: none;">
+        <span class="user-name" id="userName"></span>
+        <div class="user-dropdown">
+          <a href="/" id="linkProcessos">💼 Processos Seletivos</a>
+          <a href="/candidatos.html" id="linkCandidatos">👥 Candidatos</a>
+          <a href="#" onclick="sairDaConta()">🚪 Sair da conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="padding-top: 100px;">
+    <!-- Header -->
+    <header class="header detail-header">
+      <div class="header-left">
+        <button class="btn-back" onclick="voltarParaVaga()">
+          ← Voltar para vaga
+        </button>
+        <h1 id="vagaNome">Nome da Vaga</h1>
+      </div>
+    </header>
+
+    <!-- Card Principal do Candidato -->
+    <div class="candidato-principal-card" id="candidatoCard">
+      <div class="candidato-header">
+        <img src="" alt="" class="candidato-foto-grande" id="candidatoFoto">
+        <div class="candidato-header-info">
+          <h2 id="candidatoNome">Nome do Candidato</h2>
+          <div class="compatibilidade-badge" id="compatibilidadeBadge">
+            <span class="compatibilidade-valor">92%</span>
+            <span class="compatibilidade-label">Compatibilidade</span>
+          </div>
+        </div>
+        <div class="candidato-status-container">
+          <span class="status-label">Status no processo:</span>
+          <span class="status-candidato" id="statusCandidato">Classificado</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seções de Relatórios -->
+    <div class="relatorios-container">
+      <!-- Seção 1: Relatório de Análise -->
+      <section class="relatorio-section">
+        <div class="section-header">
+          <h3>📊 Relatório de Análise</h3>
+          <span class="section-badge">Análise automatizada</span>
+        </div>
+
+        <div class="relatorio-grid">
+          <!-- Informações Básicas -->
+          <div class="relatorio-bloco">
+            <h4>Informações Básicas</h4>
+            <div class="info-grid">
+              <div class="info-row">
+                <span class="info-label">Nome:</span>
+                <span class="info-value" id="iaNome">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Senioridade:</span>
+                <span class="info-value" id="iaSenioridade">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Escolaridade:</span>
+                <span class="info-value" id="iaEscolaridade">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Experiência profissional:</span>
+                <span class="info-value" id="iaExperiencia">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Cursos:</span>
+                <span class="info-value" id="iaCursos">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="relatorio-bloco">
+            <h4>Soft Skills</h4>
+            <div class="skills-container" id="iaSoftSkills">
+              <!-- Skills serão inseridas via JS -->
+            </div>
+          </div>
+
+          <!-- Hard Skills -->
+          <div class="relatorio-bloco">
+            <h4>Hard Skills</h4>
+            <div class="skills-container" id="iaHardSkills">
+              <!-- Skills serão inseridas via JS -->
+            </div>
+          </div>
+
+          <!-- Linguagens GitHub -->
+          <div class="relatorio-bloco" id="linguagensSection">
+            <h4>Linguagens mais utilizadas (GitHub)</h4>
+            <div class="linguagens-grid" id="iaLinguagens">
+              <!-- Linguagens serão inseridas via JS -->
+            </div>
+          </div>
+
+          <!-- Repositórios Relevantes -->
+          <div class="relatorio-bloco repositorios-bloco" id="repositoriosSection">
+            <h4>Repositórios relevantes para a vaga</h4>
+            <div class="repositorios-list" id="iaRepositorios">
+              <!-- Repositórios serão inseridos via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 2: Relatório do Recrutador -->
+      <section class="relatorio-section">
+        <div class="section-header">
+          <h3>👤 Relatório do Recrutador</h3>
+          <span class="section-badge section-badge-recrutador">Avaliação humana</span>
+        </div>
+
+        <div class="relatorio-recrutador-content">
+          <!-- Campo de Observações -->
+          <div class="observacoes-container">
+            <h4>Observações</h4>
+            <textarea 
+              id="observacoesRecrutador" 
+              placeholder="Digite suas observações sobre o candidato, impressões de entrevistas, avaliações comportamentais e técnicas..."
+              rows="6"
+            ></textarea>
+            <button class="btn-primary btn-salvar-obs" onclick="salvarObservacoes()">
+              Salvar observações
+            </button>
+          </div>
+
+          <!-- Gráfico de Compatibilidade -->
+          <div class="compatibilidade-grafico-container">
+            <h4>Compatibilidade com a vaga</h4>
+            <div class="grafico-wrapper">
+              <canvas id="compatibilidadeChart" width="250" height="250"></canvas>
+              <div class="grafico-centro">
+                <span class="grafico-valor" id="graficoCompatibilidade">0%</span>
+                <span class="grafico-label">de compatibilidade</span>
+              </div>
+            </div>
+            <div class="compatibilidade-breakdown" id="compatibilidadeBreakdown">
+              <!-- Detalhes serão inseridos via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/candidato-detalhes.js"></script>
+</body>
+</html>

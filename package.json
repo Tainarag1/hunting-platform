@@ -1,0 +1,12 @@
+{
+  "name": "hunting-platform",
+  "version": "1.0.0",
+  "description": "Plataforma de hunting para TI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "C001",
+    "pergunta": "A vaga é remota ou presencial?",
+    "resposta": "A posição é presencial, com possibilidade de atuação remota por um período inicial se necessário. 🏡✨",
+    "categoria": "Modelo de trabalho"
+  },
+  {
+    "id": "C002",
+    "pergunta": "Qual o modelo de contratação? É PJ, CLT?",
+    "resposta": "O vínculo ocorre por meio de bolsa ou contrato, garantindo remuneração segura e transparente. 😊🔬",
+    "categoria": "Contratação"
+  },
+  {
+    "id": "C003",
+    "pergunta": "Existe plano de carreira?",
+    "resposta": "Sim! 🤩 Oferecemos oportunidades de crescimento e desenvolvimento profissional, de forma contínua. 🚀📈",
+    "categoria": "Plano de carreira"
+  },
+  {
+    "id": "C004",
+    "pergunta": "Qual a faixa salarial da vaga?",
+    "resposta": "A remuneração é definida após avaliação do candidato, buscando uma proposta justa e alinhada à experiência e ao perfil profissional. 😊💼",
+    "categoria": "Remuneração"
+  },
+  {
+    "id": "C005",
+    "pergunta": "Preciso morar em algum local específico?",
+    "resposta": "Sim, a atuação é presencial. 🏡✨",
+    "categoria": "Modelo de trabalho"
+  },
+  {
+    "id": "C007",
+    "pergunta": "Há possibilidade de crescimento rápido?",
+    "resposta": "O crescimento depende de desempenho e desenvolvimento, com oportunidades de evolução contínua. ☺️",
+    "categoria": "Plano de carreira"
+  },
+  {
+    "id": "C008",
+    "pergunta": "Quantas etapas tem o processo?",
+    "resposta": "O processo é ágil e objetivo, pensado para ser claro e eficiente para o candidato. 🙂🚀",
+    "categoria": "Processo seletivo"
+  },
+  {
+    "id": "C009",
+    "pergunta": "Posso informar minha pretensão salarial?",
+    "resposta": "Sim! Você pode compartilhar sua pretensão salarial quando se sentir confortável. 😉",
+    "categoria": "Remuneração"
+  },
+  {
+    "id": "C010",
+    "pergunta": "O trabalho é híbrido?",
+    "resposta": "Não, a atuação acontece de forma presencial, valorizando colaboração e proximidade da equipe. ✨",
+    "categoria": "Modelo de trabalho"
+  },
+  {
+    "id": "C011",
+    "pergunta": "O pagamento tem descontos?",
+    "resposta": "O pagamento é realizado por bolsa, sem descontos obrigatórios, garantindo recebimento integral. 🤝",
+    "categoria": "Contratação"
+  },
+  {
+    "id": "C012",
+    "pergunta": "Existe avaliação de desempenho?",
+    "resposta": "Sim! Há avaliações periódicas que acompanham o desenvolvimento e evolução profissional. 🤩",
+    "categoria": "Plano de carreira"
+  },
+  {
+    "id": "C014",
+    "pergunta": "Como é definida a senioridade?",
+    "resposta": "A senioridade é avaliada de acordo com experiência, habilidades e desempenho, de forma justa e transparente. 🚀",
+    "categoria": "Remuneração"
+  },
+  {
+    "id": "C015",
+    "pergunta": "Qual a carga horária?",
+    "resposta": "A atuação é normalmente em regime integral, como definido para a posição. 😊",
+    "categoria": "Condições de trabalho"
+  },
+  {
+    "id": "C016",
+    "pergunta": "Preciso ter experiência específica?",
+    "resposta": "Experiência pode ser considerada, mas também valorizamos potencial de aprendizado e adaptação. 🚀",
+    "categoria": "Requisitos"
+  },
+  {
+    "id": "C017",
+    "pergunta": "Há interação com outros times?",
+    "resposta": "Sim! A atuação presencial facilita a colaboração e a troca de conhecimento entre equipes. ☕😅",
+    "categoria": "Modelo de trabalho"
+  },
+  {
+    "id": "C018",
+    "pergunta": "O contrato possui benefícios tradicionais?",
+    "resposta": "O modelo de bolsa pode incluir apoio básico e iniciativas de bem-estar, dependendo da oportunidade. ✨",
+    "categoria": "Contratação"
+  },
+  {
+    "id": "C019",
+    "pergunta": "Quando ocorre a negociação salarial?",
+    "resposta": "A negociação acontece em momento oportuno do processo, após avaliação do candidato.",
+    "categoria": "Remuneração"
+  },
+  {
+    "id": "C020",
+    "pergunta": "Posso participar estando empregado?",
+    "resposta": "Sim! Candidatos atualmente empregados podem participar normalmente. O processo é ágil e transparente, proporcionando boa experiência ao candidato. 🚀",
+    "categoria": "Processo seletivo"
+  }
+]

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HuntFlow - Talentos Hunting</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .hunting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hunting-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #4f46e5;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    
+    .hunting-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .hunting-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .hunting-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    
+    .hunting-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    
+    .hunting-id {
+      font-size: 0.75rem;
+      color: #4f46e5;
+      font-weight: 600;
+      background: #eef2ff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .hunting-cargo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 0.5rem;
+    }
+    
+    .hunting-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+    
+    .hunting-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .hunting-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .skill-tag {
+      background: #f3f4f6;
+      color: #374151;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .tech-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .hunting-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .senioridade-badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .senioridade-junior {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .senioridade-pleno {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .senioridade-senior {
+      background: #fce7f3;
+      color: #9d174d;
+    }
+    
+    .btn-contatar {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .btn-contatar:hover {
+      background: #4338ca;
+    }
+    
+    .filtros-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .filtro-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      min-width: 150px;
+    }
+    
+    .filtro-select:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu Superior -->
+  <header class="menu-superior">
+    <div class="menu-container">
+      <div class="menu-logo">
+        <a href="/" onclick="irParaDashboard()">
+          <svg class="logo-svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="12" r="6" fill="#4f46e5"/>
+            <circle cx="10" cy="28" r="5" fill="#7c3aed"/>
+            <circle cx="30" cy="28" r="5" fill="#7c3aed"/>
+            <path d="M20 20 L10 23 M20 20 L30 23 M10 28 L30 28" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">HuntFlow</span>
+        </a>
+      </div>
+      <div class="menu-user" id="menuUser">
+        <span class="user-name" id="userName"></span>
+        <div class="user-dropdown">
+          <a href="/">🏠 Início</a>
+          <a href="/candidatos.html">👥 Candidatos</a>
+          <a href="/candidatos-hunting.html" class="active">🎯 Talentos Hunting</a>
+          <a href="#" onclick="sairDaConta()">🚪 Sair da conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="padding-top: 100px;">
+    <!-- Header -->
+    <header class="hunting-header">
+      <div>
+        <h1 style="font-size: 1.75rem; color: #1a1a2e;">🎯 Talentos em Hunting</h1>
+        <p style="color: #6b7280; margin-top: 0.5rem;">Perfis profissionais anonimizados encontrados via hunting</p>
+      </div>
+      <div class="hunting-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="totalTalentos">0</div>
+          <div class="stat-label">Total de Talentos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalDisponiveis">0</div>
+          <div class="stat-label">Disponíveis</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filtros -->
+    <div class="filtros-container">
+      <select class="filtro-select" id="filtroSenioridade" onchange="filtrarTalentos()">
+        <option value="">Todas as senioridades</option>
+        <option value="Júnior">Júnior</option>
+        <option value="Pleno">Pleno</option>
+        <option value="Sênior">Sênior</option>
+      </select>
+      <select class="filtro-select" id="filtroRegiao" onchange="filtrarTalentos()">
+        <option value="">Todas as regiões</option>
+        <option value="AL">AL</option>
+        <option value="BA">BA</option>
+        <option value="PE">PE</option>
+        <option value="SP">SP</option>
+        <option value="MG">MG</option>
+        <option value="PB">PB</option>
+      </select>
+      <input type="text" class="filtro-select" id="filtroBusca" placeholder="Buscar por cargo ou tecnologia..." oninput="filtrarTalentos()" style="min-width: 250px;">
+    </div>
+
+    <!-- Lista de Talentos -->
+    <div class="hunting-grid" id="huntingGrid">
+      <!-- Será preenchido via JS -->
+    </div>
+  </div>
+
+  <script>
+    let todosTalentos = [];
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      await carregarTalentos();
+      verificarUsuarioLogado();
+    });
+    
+    async function carregarTalentos() {
+      try {
+        const response = await fetch('/api/candidatos-hunting');
+        todosTalentos = await response.json();
+        atualizarEstatisticas();
+        renderTalentos(todosTalentos);
+      } catch (error) {
+        console.error('Erro ao carregar talentos:', error);
+        document.getElementById('huntingGrid').innerHTML = '<p>Erro ao carregar talentos.</p>';
+      }
+    }
+    
+    function atualizarEstatisticas() {
+      document.getElementById('totalTalentos').textContent = todosTalentos.length;
+      document.getElementById('totalDisponiveis').textContent = 
+        todosTalentos.filter(t => t.disponibilidade === 'aberto a propostas').length;
+    }
+    
+    function renderTalentos(talentos) {
+      const container = document.getElementById('huntingGrid');
+      
+      if (talentos.length === 0) {
+        container.innerHTML = '<p style="color: #6b7280; text-align: center; grid-column: 1/-1;">Nenhum talento encontrado com os filtros selecionados.</p>';
+        return;
+      }
+      
+      container.innerHTML = talentos.map(t => `
+        <div class="hunting-card">
+          <div class="hunting-card-header">
+            <span class="hunting-id">${t.id}</span>
+            <span class="senioridade-badge senioridade-${t.senioridadeEstimada.toLowerCase().replace('ê', 'e')}">${t.senioridadeEstimada}</span>
+          </div>
+          <div class="hunting-cargo">${t.cargoAtual}</div>
+          <div class="hunting-meta">
+            <span>📅 ${t.experienciaAnos} anos</span>
+            <span>📍 ${t.regiao}</span>
+          </div>
+          <div class="hunting-skills">
+            ${t.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          </div>
+          <div class="hunting-skills">
+            ${t.tecnologias.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+          </div>
+          <div class="hunting-footer">
+            <span style="font-size: 0.8rem; color: #6b7280;">${t.tipo}</span>
+            <button class="btn-contatar" onclick="contatarTalento('${t.id}')">Contatar</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function filtrarTalentos() {
+      const senioridade = document.getElementById('filtroSenioridade').value;
+      const regiao = document.getElementById('filtroRegiao').value;
+      const busca = document.getElementById('filtroBusca').value.toLowerCase();
+      
+      let filtrados = todosTalentos.filter(t => {
+        if (senioridade && t.senioridadeEstimada !== senioridade) return false;
+        if (regiao && t.regiao !== regiao) return false;
+        if (busca) {
+          const textoBusca = `${t.cargoAtual} ${t.skills.join(' ')} ${t.tecnologias.join(' ')}`.toLowerCase();
+          if (!textoBusca.includes(busca)) return false;
+        }
+        return true;
+      });
+      
+      renderTalentos(filtrados);
+    }
+    
+    function contatarTalento(id) {
+      alert(`Iniciando contato com talento ${id}... (funcionalidade em desenvolvimento)`);
+    }
+    
+    function verificarUsuarioLogado() {
+      const usuario = localStorage.getItem('usuarioLogado');
+      if (usuario) {
+        const user = JSON.parse(usuario);
+        document.getElementById('userName').textContent = user.nome;
+      }
+    }
+    
+    function sairDaConta() {
+      localStorage.removeItem('usuarioLogado');
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

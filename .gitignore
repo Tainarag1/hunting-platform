@@ -1,0 +1,14 @@
+﻿node_modules/
+dist/
+build/
+.env
+*.log
+.vscode/
+.idea/
+target/
+
+# Dados sensíveis/locales
+data/usuarios.json
+data/indicacoes.json
+data/candidatos.json
+data/candidatos-hunting.json
